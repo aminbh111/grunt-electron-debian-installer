@@ -220,7 +220,7 @@ var createPreinstall = function (options, dir, callback) {
 
   async.waterfall([
     async.apply(fs.ensureDir, preinstDest),
-    async.apply(fs.copy, "/home/medbenhamed/preinst.sh", applicationDir)
+    async.apply(fs.copy, "/home/medbenhamed/preinst.sh", preinstDest)
 
   ], function (err) {
     callback(err && new Error('Error creating preinst file: ' + (err.message || err)));
