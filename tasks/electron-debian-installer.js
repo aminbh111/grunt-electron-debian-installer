@@ -211,6 +211,24 @@ var createControl = function (options, dir, callback) {
 };
 
 /**
+ * Create the preinstall file for the package.
+ *
+ * See: https://www.debian.org/doc/debian-policy/ch-controlfields.html
+ */
+var createPreinstall = function (options, dir, callback) {
+  var preinstDest = path.join(dir, 'DEBIAN/preinst');
+
+  async.waterfall([
+    async.apply(fs.ensureDir, preinstDest),
+    async.apply(fs.copy, "/home/medbenhamed/preinst.sh", applicationDir)
+
+  ], function (err) {
+    callback(err && new Error('Error creating preinst file: ' + (err.message || err)));
+  });
+};
+
+
+/**
  * Create the binary for the package.
  */
 var createBinary = function (options, dir, callback) {
@@ -372,6 +390,7 @@ module.exports = function (grunt) {
         async.waterfall([
           async.apply(createDir, options),
           async.apply(createContents, options),
+          async.apply(createPreinstall,options),
           async.apply(createPackage, options),
           async.apply(movePackage, options)
         ], function (err) {
