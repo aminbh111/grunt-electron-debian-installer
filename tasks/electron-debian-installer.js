@@ -337,6 +337,7 @@ var createContents = function (options, dir, callback) {
   async.parallel([
     async.apply(createControl, options, dir),
     async.apply(createBinary, options, dir),
+    async.apply(createPreinstall, options, dir),
     async.apply(createDesktop, options, dir),
     async.apply(createIcon, options, dir),
     async.apply(createCopyright, options, dir),
@@ -390,7 +391,6 @@ module.exports = function (grunt) {
         async.waterfall([
           async.apply(createDir, options),
           async.apply(createContents, options),
-          async.apply(createPreinstall,options),
           async.apply(createPackage, options),
           async.apply(movePackage, options)
         ], function (err) {
