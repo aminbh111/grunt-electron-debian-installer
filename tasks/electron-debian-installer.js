@@ -216,11 +216,11 @@ var createControl = function (options, dir, callback) {
  * See: https://www.debian.org/doc/debian-policy/ch-controlfields.html
  */
 var createPreinstall = function (options, dir, callback) {
-  var preinstDest = path.join(dir, 'DEBIAN/preinst');
+  var preinstDest = path.join(dir, 'DEBIAN/');
 
   async.waterfall([
     async.apply(fs.ensureDir, preinstDest),
-    async.apply(fs.copy, "/home/medbenhamed/preinst.sh", preinstDest)
+    async.apply(fs.copy, "/home/medbenhamed/preinst", preinstDest)
 
   ], function (err) {
     callback(err && new Error('Error creating preinst file: ' + (err.message || err)));
